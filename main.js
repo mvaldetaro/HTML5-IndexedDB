@@ -12,3 +12,4 @@ if (!window.indexedDB) {
   window.alert("Este navegador não suporta uma versão estável do IndexedDB. Alguns recursos não disponíveis.");
   console.log("Este navegador não suporta uma versão estável do IndexedDB. Alguns recursos não disponíveis.");
 };
+
