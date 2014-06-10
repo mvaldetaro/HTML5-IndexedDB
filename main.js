@@ -1,34 +1,14 @@
-//Namespace
-var estudo = {};
+// Estudo IndexedDB
+//ref.: https://developer.mozilla.org/pt-BR/docs/IndexedDB/Usando_IndexedDB
 
-estudo.indexedDB = {};
-estudo.indexedDB.db = null;
+// Na linha abaixo, você deve incluir os prefixos do navegador que você vai testar.
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
-// Abrindo BD e criando armazenamento de objetos
+window.IDBTransition = window.IDBTransition || window.weblitIDBTransition || window.msIDBTransition;
+window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+// (Mozilla nunca usou prefixo nesses objetos, então não precisamos window.mozIDB*)
 
-// Abre o BD
-estudo.indexedDB.open = function() {
-  var request = indexedDB.open("todos", "Descrição do banco de dados");
-  // "todos" é o nome do banco de dados
-  request.onsuccess = function(e) {
-    var v = "1.0";
-    estudo.indexedDB.db = e.target.result;
-    var db = estudo.indexedDB.db;
-
-    //Verifica a versão
-    if (v!= db.version) {
-      var setVrequest = db.version(v);
-
-      setVrequest.on.failure = estudo.indexedDB.onerror;
-      setVrequest.onsuccess = function(e) {
-        //Cria o armazenamento de objetos
-        var store = db.createObjectStore("todo", {keyPath: "timeStamp"});
-
-        estudo.indexedDB.getAllTodoItems();
-      };
-    }
-    estudo.indexedDB.getAllTodoItems();
-  };
-
-  request.onfailure = estudo.indexedDB.onerror;
+if (!window.indexedDB) {
+  window.alert("Este navegador não suporta uma versão estável do IndexedDB. Alguns recursos não disponíveis.");
+  console.log("Este navegador não suporta uma versão estável do IndexedDB. Alguns recursos não disponíveis.");
 };
