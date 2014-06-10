@@ -13,3 +13,13 @@ if (!window.indexedDB) {
   console.log("Este navegador não suporta uma versão estável do IndexedDB. Alguns recursos não disponíveis.");
 };
 
+//Abrindo um banco
+var request = window.indexedDB.open("DBTeste", 3);
+
+request.onerror = function(event) {
+  alert("Você não habilitou minha web app para usar IndexedDB?!");
+};
+
+request.onsuccess = function(event) {
+  console.log("sucesso!");
+};
