@@ -14,12 +14,24 @@ if (!window.indexedDB) {
 };
 
 //Abrindo um banco
+var db;
 var request = window.indexedDB.open("DBTeste", 3);
 
+// Trata o erro a cada request
 request.onerror = function(event) {
   alert("Você não habilitou minha web app para usar IndexedDB?!");
 };
 
 request.onsuccess = function(event) {
-  console.log("sucesso!");
+  db = request.result;
 };
+
+// Este evento é implementado somente em navegadores mais recentes
+request.onupgradeneeded = function(event) {
+  var db = event.target.result;
+
+  // cria um objectStore para esse banco
+  var objectStore = db.createObjectStore("nome", { keyPath: "minhaChave" });
+
+};
+
