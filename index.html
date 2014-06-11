@@ -1,11 +1,22 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt_BR">
 <head>
   <meta charset="UTF-8">
   <title>HTML5 IndexedDB</title>
-  <script src="w3c-exemplo.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="page-wrapper">
+    <form id="new-todo-form" action="#" method="post">
+      <input type="text" name="new-todo" id="new-todo" placeholder="Adicionar novo item..." required>
+    </form>
 
+    <ul id="todo-items">
+
+    </ul>
+
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+  </div>
 </body>
 </html>
