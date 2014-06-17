@@ -38,6 +38,40 @@ var todoDB = (function() {
     request.onerror = tDB.onerror;
   }
 
+  // -------------------------------------------------------------------
+  // Busca todos os itens no armazenamento de dados.
+  // -------------------------------------------------------------------
+
+  tDB.fetchTodos = function(callback) {
+    var db = datastore;
+    var transaction = db.transaction(['todo'], 'readwrite');
+    var objStore = transaction.objectStore('todo');
+
+    var keyRange = IDBKeyRange.lowerBound(0);
+    var cursorRequest = objStore.openCursor(keyRange);
+
+    var todos = [];
+
+    transaction.oncomplete = function(e) {
+      // Executa a função de callback
+      callback(todos);
+    };
+
+    cursorRequest.onsucess = function(e) {
+      var result = e.target.result;
+
+      if (!!result == false) {
+        return;
+      }
+
+      todos.push(result.value);
+
+      result.continue();
+    };
+
+    cursorRequest.onerror = tDB.onerror;
+  };
+
   return tDB;
 }());
 
