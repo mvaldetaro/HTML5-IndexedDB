@@ -72,6 +72,36 @@ var todoDB = (function() {
     cursorRequest.onerror = tDB.onerror;
   };
 
+  // -------------------------------------------------------------------
+  // Cria um novo item
+  // -------------------------------------------------------------------
+
+  tDB.createTodo = function(text, callback) {
+    // Obter uma referência para a db.
+    var db = datastore;
+    // Inicia uma nova transação.
+    var transaction = db.transaction(['todo'],'readwrite');
+    // Obter o armazenamento de dados.
+    var objStore = transaction.objectStore('todo');
+    // Criar um timestamp para o item de tarefas.
+    var timestamp = new Date().getTime();
+    // Cria um objeto para o item de tarefas.
+    var todo = {
+      'text': text,
+      'timestamp': timestamp
+    };
+    // Cria o pedido de armazenamento de dados.
+    var request = objStore.put(todo);
+    // Trata o armazenamento de dados bem sucedido
+    request.onsucess = function(e) {
+      // Executa a função de callback
+      callback(todo);
+    };
+    // Trata os erros
+    request.onerror = tDB.onerror;
+  };
+
+
   return tDB;
 }());
 
